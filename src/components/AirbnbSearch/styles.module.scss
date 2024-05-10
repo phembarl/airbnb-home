@@ -1,0 +1,29 @@
+.searchSectionBorderAfter {
+  &:after {
+    content: '';
+    background: #dddddd;
+    position: absolute;
+    bottom: 20%;
+    right: 0;
+    height: 50%;
+    width: 1px;
+    z-index: -1;
+  }
+
+  &:hover:after {
+    display: none;
+  }
+}
+
+.searchSectionBorderBefore {
+  &:hover:before {
+    content: '';
+    background: #fff;
+    position: absolute;
+    bottom: 20%;
+    left: -2px;
+    height: 50%;
+    width: 3px;
+    z-index: -1;
+  }
+}
