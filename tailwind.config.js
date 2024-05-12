@@ -18,6 +18,7 @@ export default {
         airbnbGrey: '#6A6A6A',
         airbnbGrey2: '#DDDDDD',
         airbnbGrey3: 'rgba(235, 235, 235, 0.5)',
+        airbnbGrey4: '#F7F7F7',
       },
     },
   },

@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 interface Category {
   iconName: string;
   title: string;
@@ -5,7 +7,7 @@ interface Category {
 
 export const categories: Category[] = [
   {
-    iconName: 'mdi:ticket',
+    iconName: 'zondicons:ticket',
     title: 'Icons',
   },
   {
@@ -65,3 +67,41 @@ export const categories: Category[] = [
     title: 'Arctic',
   },
 ];
+
+export interface Place {
+  images: string[];
+  location: string;
+  distance: string;
+  datePeriod: string;
+  price: string;
+  totalPriceBeforeTaxes: string;
+  guestFavorite: boolean;
+  rating: number;
+}
+
+const createRandomImage = () => {
+  return faker.image.urlPicsumPhotos();
+};
+
+export const createRandomPlace = (): Place => {
+  const monthDate = faker.number.int(15);
+  return {
+    images: faker.helpers.multiple(createRandomImage, {
+      count: 5,
+    }),
+    location: `${faker.location.city()}, ${faker.location.country()}`,
+    distance: `${faker.number.int(50)} miles to ${faker.location.county()}`,
+    datePeriod: `${faker.date.month()} ${monthDate} - ${monthDate + 5}`,
+    price: `$${faker.number.int({
+      min: 90,
+      max: 100,
+    })}`,
+    totalPriceBeforeTaxes: `$${faker.number.int(5000).toLocaleString()}`,
+    guestFavorite: faker.datatype.boolean(0.4),
+    rating: faker.number.float({
+      min: 3,
+      max: 5,
+      fractionDigits: 2,
+    }),
+  };
+};

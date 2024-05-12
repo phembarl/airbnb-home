@@ -3,5 +3,53 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Reddit Sans', sans-serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: 20px;
+}
+
+.slick-dots li {
+  margin: -5px;
+}
+
+.slick-dots li button:before {
+  font-size: 6px;
+  color: #fff;
+  opacity: 0.75;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #fff;
+  opacity: 1;
+}
+
+.slick-next {
+  right: 10px;
+}
+
+.slick-prev {
+  z-index: 1;
+  left: 10px;
+}
+
+.slick-arrow:before {
+  opacity: 1;
+  font-size: 1.5rem;
+  display: none;
+}
+
+.slick-slider:hover .slick-arrow:before {
+  display: initial;
 }
