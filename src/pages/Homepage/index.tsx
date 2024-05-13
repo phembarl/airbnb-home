@@ -52,7 +52,7 @@ const Homepage = () => {
   return (
     <div className="px-10 lg:px-20 py-5">
       <div
-        className={`px-10 lg:px-20 py-5 flex justify-between items-start fixed bg-white z-[1] right-0 w-full h-24 transition-all duration-300 ${
+        className={`px-10 lg:px-20 py-5 flex justify-between items-start fixed bg-white z-[2] right-0 w-full h-24 transition-all duration-300 ${
           changeStyle ? 'top-24' : 'top-24 lg:top-44'
         }`}
       >
