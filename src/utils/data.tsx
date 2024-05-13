@@ -105,3 +105,15 @@ export const createRandomPlace = (): Place => {
     }),
   };
 };
+
+export interface Getaway {
+  city: string;
+  description: string;
+}
+
+export const createRandomGetaways = (): Getaway => {
+  return {
+    city: faker.location.city(),
+    description: `${faker.lorem.word()} rentals`,
+  };
+};

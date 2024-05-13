@@ -29,6 +29,18 @@ const Homepage = () => {
     console.log(scrollContainerRef.current?.scrollLeft);
   };
 
+  const [changeStyle, setChangeStyle] = useState(false);
+
+  const detectScroll = () => {
+    if (window.scrollY > 10) {
+      setChangeStyle(true);
+    } else {
+      setChangeStyle(false);
+    }
+  };
+
+  window.addEventListener('scroll', detectScroll);
+
   useEffect(() => {
     const newPlaces = faker.helpers.multiple(createRandomPlace, {
       count: 50,
@@ -38,9 +50,13 @@ const Homepage = () => {
   }, [activeTab]);
 
   return (
-    <div className="px-20 py-5">
-      <div className="flex justify-between items-start">
-        <div className="relative w-9/12">
+    <div className="px-10 lg:px-20 py-5">
+      <div
+        className={`px-10 lg:px-20 py-5 flex justify-between items-start fixed bg-white z-[1] right-0 w-full h-24 transition-all duration-300 ${
+          changeStyle ? 'top-24' : 'top-24 lg:top-44'
+        }`}
+      >
+        <div className="relative w-full xl:w-9/12">
           <div
             className="text-airbnbGrey flex space-x-16 overflow-x-scroll no-scrollbar scroll-smooth"
             ref={scrollContainerRef}
@@ -80,12 +96,12 @@ const Homepage = () => {
           </div>
         </div>
 
-        <button className="flex text-sm border p-3 rounded-lg border-airbnbGrey2 hover:border-black hover:bg-airbnbGrey3">
+        <button className="hidden xl:flex text-sm border p-3 rounded-lg border-airbnbGrey2 hover:border-black bg-white hover:bg-airbnbGrey3">
           <Icon icon="mage:filter" width="20" height="20" className="mr-2" />
           <span>Filters</span>
         </button>
 
-        <div className="flex text-sm border px-3 py-[0.61rem] rounded-lg border-airbnbGrey2 hover:border-black hover:bg-airbnbGrey3">
+        <div className="hidden xl:flex text-sm border px-3 py-[0.61rem] rounded-lg border-airbnbGrey2 hover:border-black bg-white hover:bg-airbnbGrey3 whitespace-nowrap">
           <span className="mr-2">Display total before taxes</span>
           <ToggleBtn
             checked={showTotalPrice}
@@ -94,7 +110,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className="mt-10 grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-5">
+      <div className="mt-[17rem] grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-5">
         {places.map(place => (
           <LocationCard
             key={uuidv4()}
@@ -105,6 +121,7 @@ const Homepage = () => {
             price={showTotalPrice ? place.totalPriceBeforeTaxes : place.price}
             guestFavorite={place.guestFavorite}
             rating={place.rating}
+            showTotalPrice={showTotalPrice}
           />
         ))}
       </div>

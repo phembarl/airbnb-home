@@ -11,6 +11,7 @@ export interface LocationPlace {
   datePeriod: string;
   price: string;
   guestFavorite: boolean;
+  showTotalPrice: boolean;
   rating: number;
 }
 
@@ -22,6 +23,7 @@ const LocationCard = ({
   price,
   guestFavorite,
   rating,
+  showTotalPrice,
 }: LocationPlace) => {
   const settings = {
     dots: true,
@@ -65,8 +67,9 @@ const LocationCard = ({
           <p className="font-medium">{location}</p>
           <p className="font-thin">{distance}</p>
           <p className="font-thin">{datePeriod}</p>
-          <p>
-            <span className="font-medium">{price}</span> night
+          <p className={`font-thin ${showTotalPrice ? 'underline' : ''}`}>
+            <span className="font-medium">{price}</span>{' '}
+            {showTotalPrice ? ' total before taxes' : ' night'}
           </p>
         </span>
 

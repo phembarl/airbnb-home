@@ -53,3 +53,36 @@ body {
 .slick-slider:hover .slick-arrow:before {
   display: initial;
 }
+
+.rs-picker-toggle-wrapper {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+}
+
+.rs-input-group.rs-input-group-inside {
+  width: 280px !important;
+}
+
+.rs-picker-popup-daterange {
+  position: absolute !important;
+  left: 450px !important;
+  z-index: 10 !important;
+  margin-top: 10px;
+  padding: 30px !important;
+}
+
+.small-search,
+.hide-nav-ul {
+  transform: scale(0.5);
+  opacity: 0;
+  margin-top: -10px;
+  position: relative;
+  z-index: -10;
+}
+
+.big-search {
+  margin-top: -9rem;
+  opacity: 1;
+  z-index: 1;
+}
