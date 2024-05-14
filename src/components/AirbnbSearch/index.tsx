@@ -132,7 +132,7 @@ const AirbnbSearch = () => {
       {/* small search */}
       <div className="hidden lg:flex justify-center items-center">
         <div
-          className={`text-sm inline-flex border border-airbnbGrey2 shadow-md rounded-full leading-6 overflow-hidden transition-all delay-100 duration-300 -mt-16 -z-10 opacity-0 ${
+          className={`text-sm inline-flex border border-airbnbGrey2 shadow-md rounded-full leading-6 overflow-hidden transition-all duration-300 -mt-16 -z-10 opacity-0 ${
             changeStyle ? 'big-search' : ''
           }`}
         >
