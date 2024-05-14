@@ -34,7 +34,7 @@ const Footer = () => {
       <div className="px-20 pb-5 pt-10 border-b">
         <h2 className="text-2xl">Inspiration for future getaways</h2>
         <ul className="flex mt-5 space-x-8 text-airbnbGrey border-b overflow-x-scroll no-scrollbar whitespace-nowrap">
-          {tabs.map(tab => (
+          {tabs.map((tab, i: number) => (
             <li
               key={uuidv4()}
               className={`cursor-pointer ${
@@ -43,6 +43,7 @@ const Footer = () => {
                   : ''
               }`}
               onClick={() => setActiveTab(tab)}
+              data-testid={`footer-tab-[${i}]`}
             >
               {tab}
             </li>

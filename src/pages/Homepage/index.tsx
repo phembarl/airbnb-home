@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { faker } from '@faker-js/faker';
 import { v4 as uuidv4 } from 'uuid';
+import ContentLoader from 'react-content-loader';
 import { Place, categories, createRandomPlace } from '../../utils/data';
 import ScrollArrow from '../../components/ScrollArrow';
 import LocationCard from '../../components/LocationCard';
@@ -10,6 +11,7 @@ import ToggleBtn from '../../components/ToggleBtn';
 const Homepage = () => {
   const [places, setPlaces] = useState<Place[]>([]);
   const [showTotalPrice, setShowTotalPrice] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [scrollPosition, setScrollPosition] = useState(0);
   console.log(scrollPosition);
@@ -42,11 +44,17 @@ const Homepage = () => {
   window.addEventListener('scroll', detectScroll);
 
   useEffect(() => {
+    setLoading(true);
+
     const newPlaces = faker.helpers.multiple(createRandomPlace, {
       count: 50,
     });
 
     setPlaces(newPlaces);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, [activeTab]);
 
   return (
@@ -112,17 +120,31 @@ const Homepage = () => {
 
       <div className="mt-[17rem] grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-5">
         {places.map(place => (
-          <LocationCard
-            key={uuidv4()}
-            images={place.images}
-            location={place.location}
-            distance={place.distance}
-            datePeriod={place.datePeriod}
-            price={showTotalPrice ? place.totalPriceBeforeTaxes : place.price}
-            guestFavorite={place.guestFavorite}
-            rating={place.rating}
-            showTotalPrice={showTotalPrice}
-          />
+          <>
+            {loading ? (
+              <ContentLoader viewBox="0 0 500 450" height={450} width={500}>
+                <rect x="3" y="3" rx="10" ry="10" className="w-80 h-80" />
+                <rect x="6" y="340" rx="0" ry="0" width="292" height="20" />
+                <rect x="4" y="365" rx="0" ry="0" width="239" height="20" />
+                <rect x="4" y="390" rx="0" ry="0" width="215" height="20" />
+                <rect x="4" y="415" rx="0" ry="0" width="208" height="20" />
+              </ContentLoader>
+            ) : (
+              <LocationCard
+                key={uuidv4()}
+                images={place.images}
+                location={place.location}
+                distance={place.distance}
+                datePeriod={place.datePeriod}
+                price={
+                  showTotalPrice ? place.totalPriceBeforeTaxes : place.price
+                }
+                guestFavorite={place.guestFavorite}
+                rating={place.rating}
+                showTotalPrice={showTotalPrice}
+              />
+            )}
+          </>
         ))}
       </div>
     </div>

@@ -18,6 +18,7 @@ const AirbnbSearch = () => {
   const detectScroll = () => {
     if (window.scrollY > 10) {
       setChangeStyle(true);
+      setShowGuestDropdown(false);
     } else {
       setChangeStyle(false);
     }
@@ -35,11 +36,13 @@ const AirbnbSearch = () => {
   };
 
   const guestDropdownRef = useRef<HTMLInputElement>(null);
+  const guestInputRef = useRef<HTMLInputElement>(null);
 
   const handleClickOutsideGuestDropdown = (event: Event) => {
     if (
       guestDropdownRef?.current &&
-      !guestDropdownRef?.current?.contains(event.target as Node)
+      !guestDropdownRef?.current?.contains(event.target as Node) &&
+      !guestInputRef?.current?.contains(event.target as Node)
     ) {
       setShowGuestDropdown(false);
       setExpandSearch(false);
@@ -47,12 +50,9 @@ const AirbnbSearch = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutsideGuestDropdown);
+    document.addEventListener('click', handleClickOutsideGuestDropdown);
     return () => {
-      document.removeEventListener(
-        'mousedown',
-        handleClickOutsideGuestDropdown
-      );
+      document.removeEventListener('click', handleClickOutsideGuestDropdown);
     };
   }, [guestDropdownRef]);
   return (
@@ -91,10 +91,12 @@ const AirbnbSearch = () => {
         </div>
 
         <div
+          ref={guestInputRef}
           onClick={() => {
             setShowGuestDropdown(!showGuestDropdown);
             setExpandSearch(true);
           }}
+          data-testid="guest-dropdown-input"
           className={`flex pl-6 py-3 pr-44 cursor-pointer hover:bg-airbnbGrey3 hover:rounded-full relative ${styles.searchSectionBorderBefore}`}
         >
           <span>
@@ -102,7 +104,7 @@ const AirbnbSearch = () => {
             {!totalGuests ? (
               <p className="text-airbnbGrey font-light">Add guests</p>
             ) : (
-              <p className="font-medium relative">
+              <p className="font-medium relative w-20">
                 {totalGuests} {totalGuests > 1 ? 'guests' : 'guest'}
                 <button
                   className="absolute left-14 bottom-3 cursor-pointer bg-airbnbGrey2 rounded-full p-[0.1rem]"
@@ -130,25 +132,23 @@ const AirbnbSearch = () => {
       {/* small search */}
       <div className="hidden lg:flex justify-center items-center">
         <div
-          className={`text-sm inline-flex border border-airbnbGrey2 shadow-md rounded-full leading-6 overflow-hidden transition-all duration-300 -mt-16 -z-10 opacity-0 ${
+          className={`text-sm inline-flex border border-airbnbGrey2 shadow-md rounded-full leading-6 overflow-hidden transition-all delay-100 duration-300 -mt-16 -z-10 opacity-0 ${
             changeStyle ? 'big-search' : ''
           }`}
         >
           <div
-            className={`px-6 py-3 cursor-pointer relative ${styles.searchSectionBorderAfter}`}
+            className={`px-6 py-3 cursor-pointer relative ${styles.searchSectionBorderAfter} hover:after:block`}
           >
             <p className="font-medium">Anywhere</p>
           </div>
 
           <div
-            className={`px-6 py-3 cursor-pointer relative ${styles.searchSectionBorderAfter} ${styles.searchSectionBorderBefore}`}
+            className={`px-6 py-3 cursor-pointer relative ${styles.searchSectionBorderAfter} hover:after:block`}
           >
             <p className="font-medium">Any week</p>
           </div>
 
-          <div
-            className={`flex px-6 py-3 pr-16 cursor-pointer relative ${styles.searchSectionBorderBefore}`}
-          >
+          <div className="flex px-6 py-3 pr-16 cursor-pointer relative">
             <span>
               <p className="text-airbnbGrey font-light">Add guests</p>
             </span>
@@ -166,6 +166,7 @@ const AirbnbSearch = () => {
         className={`bg-white border rounded-3xl shadow-md p-10 absolute right-0 top-[6.15rem] w-[26rem] ${
           showGuestDropdown ? '' : 'hidden'
         }`}
+        data-testid="guest-dropdown"
       >
         <div className="flex justify-between items-center border-b pb-5">
           <div>
@@ -180,6 +181,7 @@ const AirbnbSearch = () => {
               }}
               className="border border-airbnbGrey text-airbnbGrey rounded-full p-1 disabled:text-airbnbGrey2 disabled:border-airbnbGrey2"
               disabled={adults === 0}
+              data-testid="adult-minus"
             >
               <Icon icon="bi:dash" width="24" height="24" />
             </button>
@@ -189,6 +191,7 @@ const AirbnbSearch = () => {
                 setAdults(adults + 1);
               }}
               className="border border-airbnbGrey text-airbnbGrey rounded-full p-1"
+              data-testid="adult-plus"
             >
               <Icon icon="bi:plus" width="24" height="24" />
             </button>
